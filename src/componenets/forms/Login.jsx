@@ -85,7 +85,7 @@ export default function Login({ setPage }) {
                 setPage(2);
               } else {
                 setIsExistingUser(true);
-                // alert("already a seller");
+                alert("already a seller");
               }
             })
             .catch((err) => {
@@ -156,14 +156,13 @@ export default function Login({ setPage }) {
                 Resend OTP
               </div>
             </div>
-            <div className={style.Btn}>
-              <input
-                className="PrimaryBtn"
-                type="submit"
-                value={"Verify & Continue"}
-                id="OtpButton"
-              />
-            </div>
+            <button
+              type="submit"
+              id="OtpButton"
+              className={`PrimaryBtn ${style.Btn}`}
+            >
+              Verify & Continue
+            </button>
           </form>
         ) : null}
       </div>
