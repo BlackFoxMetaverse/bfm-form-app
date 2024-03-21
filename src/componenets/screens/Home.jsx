@@ -34,6 +34,13 @@ export default function Home() {
     console.log(seller);
   }, [seller]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [page]);
+
   return (
     <div className={style.Container}>
       <div className={style.Center}>
