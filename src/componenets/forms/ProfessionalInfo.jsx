@@ -136,7 +136,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
       <div className={style.Page}>
         <div className={style.TextField}>
           <label htmlFor="city" className={style.Label}>
-            Profession
+            Profession*
           </label>
           <input
             type="text"
@@ -164,7 +164,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="experience" className={style.Label}>
-            Experience
+            Experience*
           </label>
           <select
             name="experience"
@@ -190,7 +190,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="services" className={style.Label}>
-            Services Provided
+            Services Provided*
           </label>
           {seller.services.length > 0 && (
             <div className={style.TagsContainer}>
@@ -208,15 +208,18 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
               ))}
             </div>
           )}
-          <input
-            type="text"
-            name="services"
-            id="services"
-            placeholder="Enter Service"
-            className={style.TextInput}
-            value={serviceInput}
-            onChange={(e) => setServiceInput(e.target.value)}
-          />
+          {seller.services.length <= 7 && (
+            <input
+              type="text"
+              name="services"
+              id="services"
+              required={seller.services.length === 0}
+              placeholder="Enter Service"
+              className={style.TextInput}
+              value={serviceInput}
+              onChange={(e) => setServiceInput(e.target.value)}
+            />
+          )}
           {serviceInput !== "" && services.length > 0 && (
             <div className={style.SuggestionContainer}>
               {services.map((service, index) => (
@@ -251,15 +254,18 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
               ))}
             </div>
           )}
-          <input
-            type="text"
-            name="skills"
-            id="skills"
-            className={style.TextInput}
-            placeholder="Enter Skill"
-            value={skillInput}
-            onChange={(e) => setSkillInput(e.target.value)}
-          />
+          {seller.skills.length <= 7 && (
+            <input
+              type="text"
+              name="skills"
+              id="skills"
+              required={seller.skills.length === 0}
+              className={style.TextInput}
+              placeholder="Enter Skill"
+              value={skillInput}
+              onChange={(e) => setSkillInput(e.target.value)}
+            />
+          )}
           {skillInput && skills.length > 0 && (
             <div className={style.SuggestionContainer}>
               {skills.map((skill, index) => (
@@ -324,14 +330,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
             />
           </div>
         </div>
-        <button
-          className="PrimaryBtn"
-          type="button"
-          id="OtpButton"
-          onClick={() => {
-            setPage(4);
-          }}
-        >
+        <button className="PrimaryBtn" type="submit" id="OtpButton">
           Save & Continue
         </button>
       </div>

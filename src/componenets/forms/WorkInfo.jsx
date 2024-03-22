@@ -223,6 +223,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       console.error(error);
       setIsLoading(false);
       setIsCompleted(false);
+      alert("Some thing went wrong!");
     }
   };
 
@@ -269,7 +270,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       <div className={style.Page}>
         <div className={style.TextField}>
           <label htmlFor="description" className={style.Label}>
-            Description
+            Description*
           </label>
           <textarea
             type="text"

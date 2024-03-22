@@ -107,12 +107,11 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
       <div className={style.Page}>
         <div className={style.Image}>
           {imageUrl ? (
-            <img src={imageUrl} alt="" srcset="" />
+            <img src={imageUrl} alt="" />
           ) : (
             <img
               src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSNny9UzO6PL9io1c-dOKkcKACQSsCpmU14Au-kBC1TqIHy4EBO"
               alt=""
-              srcset=""
             />
           )}
           <label htmlFor="image">
@@ -155,7 +154,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="userName" className={style.Label}>
-            Username
+            Username*
           </label>
           <input
             type="text"
@@ -254,7 +253,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="city" className={style.Label}>
-            City
+            City*
           </label>
           <input
             type="text"

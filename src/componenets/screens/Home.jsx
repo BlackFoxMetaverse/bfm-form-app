@@ -8,7 +8,6 @@ import WorkInfo from "../forms/WorkInfo";
 
 export default function Home() {
   const [page, setPage] = useState(1);
-
   const [seller, setSeller] = useState({
     image: null,
     name: "",
@@ -44,7 +43,7 @@ export default function Home() {
   return (
     <div className={style.Container}>
       <div className={style.Center}>
-        <Bread page={page} set />
+        <Bread page={page} setPage={setPage} />
         {page === 1 ? <Login setPage={setPage} /> : null}
         {page === 2 ? (
           <PersonalInfo

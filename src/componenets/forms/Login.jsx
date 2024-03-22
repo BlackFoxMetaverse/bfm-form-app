@@ -46,7 +46,7 @@ export default function Login({ setPage }) {
   const handleSendOTP = (event) => {
     event.preventDefault();
     const phone_number = event.target["phone_number"].value;
-    console.log(phone_number);
+    // console.log(phone_number);
     generateRecaptcha();
     let appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, `+91${phone_number}`, appVerifier)
@@ -59,7 +59,8 @@ export default function Login({ setPage }) {
       })
       .catch((error) => {
         // Error; SMS not sent
-        console.log(error);
+        console.error(error);
+        alert(`User couldn't sign in ${error}`);
       });
   };
 
@@ -75,7 +76,7 @@ export default function Login({ setPage }) {
           // User signed in successfully.
           let token = result.user.accessToken;
           let uid = result.user.uid;
-          console.log(uid);
+          // console.log(uid);
           sessionStorage.setItem("bfm-form-seller-token", token);
           sessionStorage.setItem("bfm-form-seller-uid", uid);
 
@@ -92,7 +93,7 @@ export default function Login({ setPage }) {
               console.log("error", err);
             });
 
-          console.log(token);
+          // console.log(token);
         })
         .catch((error) => {
           // User couldn't sign in (bad verification code?)
