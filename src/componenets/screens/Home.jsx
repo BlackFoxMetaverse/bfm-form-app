@@ -26,7 +26,7 @@ export default function Home() {
     socialMediaLinks: [],
     experienceDetails: [],
     images: [null, null, null, null, null, null],
-    video: [null, null, null, null, null, null],
+    videos: [null, null, null, null, null, null],
     coordinates: { longitude: 0, latitude: 0 },
   });
 
@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <div className={style.Container}>
       <div className={style.Center}>
-        <Bread page={page} />
+        <Bread page={page} set />
         {page === 1 ? <Login setPage={setPage} /> : null}
         {page === 2 ? (
           <PersonalInfo

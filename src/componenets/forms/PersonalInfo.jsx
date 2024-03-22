@@ -122,7 +122,6 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
               name="image"
               id="image"
               accept="image/*"
-              required
               onChange={(e) => {
                 setSeller((prev) => ({
                   ...prev,

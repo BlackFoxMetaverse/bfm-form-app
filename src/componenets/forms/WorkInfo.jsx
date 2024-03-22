@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "../../styles/Form.module.css";
 import { FaDribbble, FaGithub, FaLinkedinIn, FaVideo } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
@@ -109,9 +109,9 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             return midArr;
           });
           setSeller((prev) => {
-            let vidArr = prev.video;
+            let vidArr = prev.videos;
             vidArr[index] = file;
-            return { ...prev, video: vidArr };
+            return { ...prev, videos: vidArr };
           });
         } else {
           alert("Please upload a video less than 1 minute in duration.");
@@ -149,9 +149,9 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       });
     } else {
       setSeller((prev) => {
-        let vidArr = prev.video;
+        let vidArr = prev.videos;
         vidArr[index] = null;
-        return { ...prev, video: vidArr };
+        return { ...prev, videos: vidArr };
       });
     }
 
@@ -194,8 +194,10 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       formData.append("images", img);
     });
 
-    if (seller.video) {
-      formData.append("video", seller.video);
+    if (seller.videos) {
+      seller.videos.forEach((vid, index) => {
+        formData.append("videos", vid);
+      });
     }
 
     // Append coordinates
@@ -617,7 +619,6 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
                     style={{
                       display: "none",
                     }}
-                    // accept="image/* || video/*"
                     onChange={(e) =>
                       handleMediaAdd({ index, file: e.target.files[0] })
                     }
