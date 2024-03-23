@@ -172,7 +172,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
     formData.append("userName", seller.userName);
     formData.append("gender", seller.gender);
     formData.append("email", seller.email);
-    formData.append("phone_number", seller.phone_number);
+    formData.append("phone_number", "+91" + seller.phone_number);
     formData.append("city", seller.city);
     formData.append("profession", seller.profession);
     formData.append("experience", seller.experience);

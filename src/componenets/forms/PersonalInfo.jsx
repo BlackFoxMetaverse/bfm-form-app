@@ -213,43 +213,41 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
             placeholder="randomemail@gmail.com"
             className={style.TextInput}
             required
+            disabled
             value={seller.email}
-            onChange={(e) =>
-              setSeller((prev) => ({
-                ...prev,
-                email: e.target.value,
-              }))
-            }
           />
-          {seller.email === "" ? null : isEmailValid ? (
-            <h4 style={{ color: isEmailValid?.color, margin: 0 }}>
-              {isEmailValid?.message}
-            </h4>
-          ) : (
-            <h4 style={{ color: isEmailValid?.color, margin: 0 }}>
-              {isEmailValid?.message}
-            </h4>
-          )}
         </div>
         <div
-          style={{
-            display: "none",
-          }}
+          // style={{
+          //   display: "none",
+          // }}
           className={style.TextField}
         >
           <label htmlFor="phone_number" className={style.Label}>
             Phone Number
           </label>
-          <input
-            type="number"
-            name="phone_number"
-            id="phone_number"
-            className={style.TextInput}
-            placeholder="+91 1234567890"
-            required
-            disabled
-            value={seller.phone_number}
-          />
+          <div
+            style={{
+              display: "flex",
+            }}
+            className={style.NumberField}
+          >
+            <p className="m-0 font-p">+91</p>
+            <input
+              name="phone_number"
+              type="number"
+              id="phone_number"
+              maxLength={10}
+              placeholder="1234567890"
+              value={seller.phone_number}
+              onChange={(e) =>
+                setSeller({
+                  ...seller,
+                  phone_number: e.target.value,
+                })
+              }
+            />
+          </div>
         </div>
         <div className={style.TextField}>
           <label htmlFor="city" className={style.Label}>

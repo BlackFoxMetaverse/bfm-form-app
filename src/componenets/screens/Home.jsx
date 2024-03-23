@@ -13,6 +13,7 @@ export default function Home() {
     name: "",
     userName: "",
     email: "",
+    phone_number: "",
     city: "",
     profession: "",
     gender: "",
@@ -33,6 +34,8 @@ export default function Home() {
     console.log(seller);
   }, [seller]);
 
+  console.log(page);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -44,7 +47,9 @@ export default function Home() {
     <div className={style.Container}>
       <div className={style.Center}>
         <Bread page={page} setPage={setPage} />
-        {page === 1 ? <Login setPage={setPage} /> : null}
+        {page === 1 ? (
+          <Login setPage={setPage} seller={seller} setSeller={setSeller} />
+        ) : null}
         {page === 2 ? (
           <PersonalInfo
             seller={seller}
