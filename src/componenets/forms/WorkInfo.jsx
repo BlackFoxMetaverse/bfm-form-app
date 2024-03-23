@@ -319,6 +319,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
               name="social-media"
               id="social-media"
               value={socialType}
+              required={seller.socialMediaLinks.length === 0}
               className={style.Dropdown}
               onChange={(e) => setSocialType(e.target.value)}
             >

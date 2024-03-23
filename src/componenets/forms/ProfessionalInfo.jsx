@@ -185,7 +185,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
             <option value="0-1">0-1</option>
             <option value="1-3">1-3</option>
             <option value="3-5">3-5</option>
-            <option value="5-above">5-above</option>
+            <option value="5and above">5and above</option>
           </select>
         </div>
         <div className={style.TextField}>
@@ -236,7 +236,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="skills" className={style.Label}>
-            Skills
+            Skills*
           </label>
           {seller.skills.length > 0 && (
             <div className={style.TagsContainer}>
