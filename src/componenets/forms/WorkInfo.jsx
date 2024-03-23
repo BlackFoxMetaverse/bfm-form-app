@@ -218,12 +218,11 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       console.log(response.data);
       setIsLoading(false);
       setIsCompleted(true);
-      alert("seller created!!");
     } catch (error) {
       console.error(error);
       setIsLoading(false);
-      setIsCompleted(false);
       alert("Some thing went wrong!");
+      setIsCompleted(false);
     }
   };
 
@@ -381,7 +380,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
           className="formLayout"
         >
           <label htmlFor="experienceDetails" className={style.Label}>
-            Experince*
+            Experiences*
           </label>
           {seller.experienceDetails.map((obj, index, idx) => (
             <div key={idx} className={style.TextField}>

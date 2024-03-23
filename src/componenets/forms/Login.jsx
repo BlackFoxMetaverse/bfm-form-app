@@ -13,8 +13,8 @@ import axios from "axios";
 import SubscriptionConfirmation from "../Modals/SubscriptionConfirmation";
 
 export default function Login({ setPage, seller, setSeller }) {
-  const [isOTP, setIsOTP] = useState(false);
-  const [otp, setOtp] = useState("");
+  // const [isOTP, setIsOTP] = useState(false);
+  // const [otp, setOtp] = useState("");
   const [isExistingUser, setIsExistingUser] = useState(false);
 
   async function loginUser(token) {
@@ -115,7 +115,6 @@ export default function Login({ setPage, seller, setSeller }) {
       const token = result.user.accessToken;
       const uid = result.user.uid;
       const { displayName, email } = result.user;
-      console.log(result.user);
       sessionStorage.setItem("bfm-form-seller-token", token);
       sessionStorage.setItem("bfm-form-seller-uid", uid);
       const data = await loginUser(token);
@@ -127,12 +126,11 @@ export default function Login({ setPage, seller, setSeller }) {
           email: email,
         });
       } else {
-        alert("Already a seller");
         setIsExistingUser(true);
       }
     } catch (error) {
       console.error("Error signing in with Google:", error);
-      // alert("Failed to sign in with Google");
+      alert("Failed to sign in with Google Please try after sometime");
       setIsExistingUser(false);
     }
   };

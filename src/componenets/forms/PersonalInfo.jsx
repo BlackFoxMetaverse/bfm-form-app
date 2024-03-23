@@ -4,24 +4,33 @@ import axios from "axios";
 import { IoCameraOutline } from "react-icons/io5";
 
 export default function PersonalInfo({ seller, setSeller, setPage }) {
-  let emailValidateTimeOut;
+  let phoneValidateTimeOut;
   let userNameValidateTimeOut;
-  const [isEmailValid, setIsEmailValid] = useState(null);
+  const [isPhoneValid, setIsPhoneValid] = useState(null);
   const [isUserNameValid, setIsUserNameValid] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [cities, setCities] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPage(3);
+    if (
+      isPhoneValid !== null &&
+      isPhoneValid?.message === "Phone Number is valid" &&
+      isUserNameValid
+    ) {
+      setPage(3);
+    }
   };
 
-  const checkEmail = async (value) => {
+  const checkPhone = async (value) => {
     try {
+      const code = "+91";
       if (value === "") return Promise.resolve(false);
       const uid = sessionStorage.getItem("bfm-form-seller-uid");
       const response = await axios.get(
-        `https://api.blackfoxmetaverse.io/check/email?uid=${uid}&email=${value}`
+        `https://api.blackfoxmetaverse.io/check/phone?uid=${uid}&phone_number=${encodeURIComponent(
+          code + value
+        )}`
       );
       return Promise.resolve(response.data);
     } catch (error) {
@@ -43,29 +52,35 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
   };
 
   useEffect(() => {
-    if (emailValidateTimeOut) {
-      clearTimeout(emailValidateTimeOut);
+    if (phoneValidateTimeOut) {
+      clearTimeout(phoneValidateTimeOut);
     }
-    emailValidateTimeOut = setTimeout(() => {
-      var regexp =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-      if (regexp.test(seller.email)) {
-        checkEmail(seller.email)
-          .then((res) =>
-            setIsEmailValid({ color: "green", message: "Email is valid" })
-          )
-          .catch((err) =>
-            setIsEmailValid({ color: "red", message: "Email already taken" })
-          );
-      } else {
-        setIsEmailValid({
-          color: "red",
-          message: "Please Enter a valid email address",
-        });
+    phoneValidateTimeOut = setTimeout(() => {
+      if (seller.phone_number.length < 10) {
+        return;
       }
+      checkPhone(seller.phone_number)
+        .then((res) => {
+          if (res) {
+            setIsPhoneValid({
+              color: "green",
+              message: "Phone Number is valid",
+            });
+          } else {
+            setIsPhoneValid({
+              color: "red",
+              message: "Phone Number already taken",
+            });
+          }
+        })
+        .catch((err) => {
+          setIsPhoneValid({
+            color: "red",
+            message: "Phone Number already taken",
+          });
+        });
     }, 500);
-  }, [seller.email]);
+  }, [seller.phone_number]);
 
   useEffect(() => {
     if (userNameValidateTimeOut) {
@@ -179,7 +194,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="gender" className={style.Label}>
-            Gender
+            Gender*
           </label>
           <select
             name="gender"
@@ -212,7 +227,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
             id="email"
             placeholder="randomemail@gmail.com"
             className={style.TextInput}
-            required
+            // required
             disabled
             value={seller.email}
           />
@@ -224,7 +239,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
           className={style.TextField}
         >
           <label htmlFor="phone_number" className={style.Label}>
-            Phone Number
+            Phone Number*
           </label>
           <div
             style={{
@@ -238,6 +253,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
               type="number"
               id="phone_number"
               maxLength={10}
+              required
               placeholder="1234567890"
               value={seller.phone_number}
               onChange={(e) =>
@@ -248,6 +264,15 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
               }
             />
           </div>
+          {seller.phone_number.length < 10 ? null : isPhoneValid ? (
+            <h4 style={{ color: isPhoneValid?.color, margin: 0 }}>
+              {isPhoneValid?.message}
+            </h4>
+          ) : (
+            <h4 style={{ color: isPhoneValid?.color, margin: 0 }}>
+              {isPhoneValid?.message}
+            </h4>
+          )}
         </div>
         <div className={style.TextField}>
           <label htmlFor="city" className={style.Label}>
@@ -277,7 +302,11 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
             </div>
           )}
         </div>
-        <button className="PrimaryBtn" type="submit">
+        <button
+          disabled={isPhoneValid && !isUserNameValid}
+          className="PrimaryBtn"
+          type="submit"
+        >
           Save & Continue
         </button>
       </div>

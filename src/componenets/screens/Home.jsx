@@ -5,6 +5,7 @@ import Login from "../forms/Login";
 import PersonalInfo from "../forms/PersonalInfo";
 import ProfessionalInfo from "../forms/ProfessionalInfo";
 import WorkInfo from "../forms/WorkInfo";
+import { getUserPreciseLocation } from "../../utils/location";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -34,14 +35,18 @@ export default function Home() {
     console.log(seller);
   }, [seller]);
 
-  console.log(page);
-
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, [page]);
+
+  useEffect(() => {
+    getUserPreciseLocation().then((location) => {
+      setSeller({ ...seller, coordinates: { ...location } });
+    });
+  }, []);
 
   return (
     <div className={style.Container}>
