@@ -7,6 +7,7 @@ function SubscriptionConfirmation() {
       .mainModal{
         position: fixed;
         inset: 0;
+        height: 100vh;
         background: white;
         display: flex;
         justify-content: center;

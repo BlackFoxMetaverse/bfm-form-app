@@ -193,15 +193,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
 }
 
 .Image div {
-  position: absolute;
-  inset: 0px;
-  transform: translate(10px);
-  border: 4.7px solid #f7df1e;
   border-radius: 50%;
-  z-index: -10;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
 }
 
 .Image img {
@@ -387,6 +388,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   justify-content: center;
 }
 

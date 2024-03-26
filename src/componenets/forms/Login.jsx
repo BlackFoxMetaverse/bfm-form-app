@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../styles/Form.module.css";
 import otpStyle from "../../styles/Otp.module.css";
 import { auth } from "./../../utils/firebase";
@@ -7,6 +7,9 @@ import {
   signInWithPhoneNumber,
   signInWithPopup,
   GoogleAuthProvider,
+  signInWithEmailLink,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
 } from "firebase/auth";
 import OTPInput from "react-otp-input";
 import axios from "axios";
@@ -16,6 +19,8 @@ export default function Login({ setPage, seller, setSeller }) {
   // const [isOTP, setIsOTP] = useState(false);
   // const [otp, setOtp] = useState("");
   const [isExistingUser, setIsExistingUser] = useState(false);
+  const [isRegisterClicked, setIsRegisterClicked] = useState(false);
+  const [isEmailSent, setIsEmailSent] = useState(false);
 
   async function loginUser(token) {
     try {
@@ -113,8 +118,7 @@ export default function Login({ setPage, seller, setSeller }) {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const token = result.user.accessToken;
-      const uid = result.user.uid;
-      const { displayName, email } = result.user;
+      const { displayName, email, uid } = result.user;
       sessionStorage.setItem("bfm-form-seller-token", token);
       sessionStorage.setItem("bfm-form-seller-uid", uid);
       const data = await loginUser(token);
@@ -132,6 +136,64 @@ export default function Login({ setPage, seller, setSeller }) {
       console.error("Error signing in with Google:", error);
       alert("Failed to sign in with Google Please try after sometime");
       setIsExistingUser(false);
+    }
+  };
+
+  useEffect(() => {
+    const savedEmail = window.localStorage.getItem("userCustomEmail");
+
+    signInWithEmailLink(auth, savedEmail)
+      .then(async (result) => {
+        const { displayName, email, uid } = result.user;
+        const token = result.user.accessToken;
+        sessionStorage.setItem("bfm-form-seller-token", token);
+        sessionStorage.setItem("bfm-form-seller-uid", uid);
+
+        localStorage.removeItem("userCustomEmail");
+
+        await loginUser(token)
+          .then((data) => {
+            if (!data.isSeller) {
+              setPage(2);
+              setSeller({
+                ...seller,
+                name: displayName,
+                email: email,
+              });
+            } else {
+              setIsExistingUser(true);
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            setIsExistingUser(false);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  const handleSignInwithEmail = async (e) => {
+    try {
+      e.preventDefault();
+      const enteredEmail = e.target["email"].value;
+      // generateRecaptcha();
+      await sendSignInLinkToEmail(auth, enteredEmail, {
+        url: window.location.href,
+        handleCodeInApp: true,
+      }).then(() => {
+        localStorage.setItem("userCustomEmail", enteredEmail);
+        setIsEmailSent(true);
+        setTimeout(() => {
+          window.close();
+        }, 3000);
+      });
+    } catch (error) {
+      console.error("Error signing in with email:", error);
+      alert("Failed to sign in with email. Please try again.");
+      setIsExistingUser(false);
+      setIsEmailSent(false);
     }
   };
 
@@ -174,15 +236,70 @@ export default function Login({ setPage, seller, setSeller }) {
 
         <div>
           <div className={style.Page}>
-            <div className={style.Header}>Sign in with Google</div>
+            <div className={style.Header}>Register with us</div>
             <div className={style.Subtext}>
               Click the button below to sign in with your Google account.
             </div>
-            <button className="PrimaryBtn" onClick={handleGoogleSignIn}>
+            <button className="googleBtn" onClick={handleGoogleSignIn}>
+              <img src="/logo_google.svg" alt="" />
               Sign in with Google
             </button>
+            <p
+              style={{
+                width: "100%",
+                textAlign: "center",
+                margin: 0,
+              }}
+            >
+              or
+            </p>
+            {!isRegisterClicked ? (
+              <button
+                type="button"
+                style={{
+                  borderRadius: 100,
+                  padding: 8,
+                }}
+                className="PrimaryBtn"
+                onClick={() => setIsRegisterClicked(!isRegisterClicked)}
+              >
+                Register
+              </button>
+            ) : (
+              <form
+                className={style.TextField}
+                action=""
+                method="post"
+                onSubmit={handleSignInwithEmail}
+              >
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  style={{
+                    borderRadius: 100,
+                    border: "1.5px solid rgba(91, 155, 233, 0.5)",
+                  }}
+                  className={style.TextInput}
+                  placeholder="example@example.com"
+                />
+                <button
+                  type="submit"
+                  style={{
+                    borderRadius: 100,
+                    padding: 8,
+                    border: "3px solid rgba(91, 155, 233, 0.5)",
+                    color: isEmailSent && "rgba(91, 155, 233, 1)",
+                  }}
+                  className={isEmailSent ? "SecondaryBtn" : "PrimaryBtn"}
+                >
+                  {isEmailSent
+                    ? "Check your email to Sign In"
+                    : "Send Confirmation"}
+                </button>
+              </form>
+            )}
           </div>
-          {/* <SubscriptionConfirmation /> */}
         </div>
 
         {/* {isOTP ? (

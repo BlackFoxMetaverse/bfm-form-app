@@ -27,6 +27,7 @@ function ThankYouPage() {
         .mainPage {
           position: fixed;
           inset: 0;
+          height: 100vh;
           background: white;
           z-index: 50;
           display: flex;

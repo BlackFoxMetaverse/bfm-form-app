@@ -7,6 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { IoAdd } from "react-icons/io5";
 import ThankYouPage from "../Modals/ThankYouPage";
+import { Link } from "react-router-dom";
 
 const SocialTypes = [
   {
@@ -384,7 +385,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             Experiences*
           </label>
           {seller.experienceDetails.map((obj, index, idx) => (
-            <div key={idx} className={style.TextField}>
+            <div key={index} className={style.TextField}>
               {/* <label htmlFor="title" className={style.Label}>
                   Title
                 </label> */}
@@ -633,20 +634,33 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
         </div>
 
         <div className={style.CheckBox}>
+          <input
+            type="checkbox"
+            name="agreetoshare"
+            id="agreetoshare"
+            required
+          />
+          <label htmlFor="agree" className={style.Label}>
+            I willingly share my details and information. I am aware that my
+            contact details will be accessible to both visitors and members of
+            the BFM platform due to my personal choice and decision.
+          </label>
+        </div>
+        <div className={style.CheckBox}>
           <input type="checkbox" name="agree" id="agree" required />
           <label htmlFor="agree" className={style.Label}>
             I agree to all{" "}
-            <a href="" target="_blank">
+            <Link to="/terms-and-conditions" target="_blank">
               Terms & Conditions
-            </a>{" "}
+            </Link>{" "}
             also the{" "}
-            <a href="" target="_blank">
+            <Link to="/privacy-policy" target="_blank">
               Privacy Policy
-            </a>
+            </Link>
           </label>
         </div>
         <button type="submit" className="PrimaryBtn" disabled={isLoading}>
-          {isLoading ? "Loading..." : "submit"}
+          {isLoading ? "Loading..." : "Submit"}
         </button>
       </div>
       {isCompleted && <ThankYouPage />}

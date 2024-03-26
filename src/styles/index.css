@@ -29,6 +29,19 @@ button:disabled {
   opacity: 0.5;
 }
 
+.googleBtn {
+  padding: 12px;
+  /* max-width: 500px; */
+  width: 100%;
+  gap: 10px;
+  background-color: white;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid rgba(91, 155, 233, 0.5);
+}
+
 ::-webkit-inner-spin-button {
   display: none;
 }

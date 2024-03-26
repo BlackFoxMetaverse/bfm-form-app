@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "../../styles/Form.module.css";
 import axios from "axios";
 import { IoCameraOutline } from "react-icons/io5";
+import { FaUser, FaUsers } from "react-icons/fa6";
 
 export default function PersonalInfo({ seller, setSeller, setPage }) {
   let phoneValidateTimeOut;
@@ -125,7 +126,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
             <img src={imageUrl} alt="" />
           ) : (
             <img
-              src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSNny9UzO6PL9io1c-dOKkcKACQSsCpmU14Au-kBC1TqIHy4EBO"
+              src="https://i.pinimg.com/564x/70/dd/61/70dd612c65034b88ebf474a52ccc70c4.jpg"
               alt=""
             />
           )}
@@ -239,7 +240,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
           className={style.TextField}
         >
           <label htmlFor="phone_number" className={style.Label}>
-            Phone Number*
+            Phone Number* (Whatsapp Number)
           </label>
           <div
             style={{
