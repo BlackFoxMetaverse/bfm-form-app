@@ -255,7 +255,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
               id="phone_number"
               maxLength={10}
               required
-              placeholder="1234567890 (Whatsapp Number)"
+              placeholder="1234567890"
               value={seller.phone_number}
               onChange={(e) =>
                 setSeller({

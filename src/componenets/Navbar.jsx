@@ -9,7 +9,7 @@ const Navbar = () => {
           <img src={bfmlogo} alt="logo"></img>
           <div className={style.Heading}>
             Registration
-            <span className={style.Subtext}>In progress</span>
+            {/* <span className={style.Subtext}>In progress</span> */}
           </div>
         </div>
       </div>
