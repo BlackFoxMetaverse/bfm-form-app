@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Navbar from "./componenets/Navbar";
 import Home from "./componenets/screens/Home";
 import ReactGA from "react-ga4";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import TandC from "./componenets/screens/TandC";
 import Acknowledge from "./componenets/screens/Acknowledge";
 
@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <hr />
       <Routes>
@@ -33,7 +33,7 @@ function App() {
         <Route element={<Acknowledge />} path="/privacy-policy" />
       </Routes>
       {/* <Home /> */}
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
