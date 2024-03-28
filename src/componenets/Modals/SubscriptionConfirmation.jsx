@@ -3,7 +3,7 @@ import * as React from "react";
 function SubscriptionConfirmation({ username, uid }) {
   console.log({ uid, username });
   const handleBackHomeClick = () => {
-    window.location.href = `https://portfolio.blackfoxmetaverse.io/profile/${username}?uid=${uid}`;
+    window.location.href = `https://portfolio.blackfoxmetaverse.io/#/profile/${username}?uid=${uid}`;
   };
 
   return (

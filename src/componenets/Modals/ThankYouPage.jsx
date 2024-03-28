@@ -2,7 +2,7 @@ import * as React from "react";
 
 function ThankYouPage({ userName, uid }) {
   const handleBackHomeClick = () => {
-    window.location.href = `https://portfolio.blackfoxmetaverse.io/profile/${userName}?uid=${uid}`;
+    window.location.href = `https://portfolio.blackfoxmetaverse.io/#/profile/${userName}?uid=${uid}`;
   };
 
   return (
