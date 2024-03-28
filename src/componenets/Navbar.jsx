@@ -8,8 +8,8 @@ const Navbar = () => {
         <div className={style.Wrapper}>
           <img src={bfmlogo} alt="logo"></img>
           <div className={style.Heading}>
-            Account Verification
-            <span className={style.Subtext}>In progress</span>
+            Registration
+            {/* <span className={style.Subtext}>In progress</span> */}
           </div>
         </div>
       </div>

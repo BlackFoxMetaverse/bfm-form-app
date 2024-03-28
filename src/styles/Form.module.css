@@ -15,7 +15,7 @@
 
 .Page {
   display: inline-flex;
-  padding: 30px 40px;
+  padding: 30px 0px;
   flex-direction: column;
   align-items: flex-start;
   gap: 22.916px;
@@ -29,15 +29,18 @@
 }
 
 .Subtext {
-  width: 580px;
+  max-width: 580px;
   font-size: 16px;
   color: rgba(102, 102, 102, 1);
 }
 
 .NumberField {
   display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  padding: 12px 16px;
+  border-radius: 8px;
+  align-items: center;
+  border: 1px solid var(--Grey-Grey-3, #e1e3e6);
+  gap: 0.5rem;
 }
 
 .NumberField label {
@@ -46,9 +49,13 @@
 }
 
 .NumberField input {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   width: 100%;
-  font-size: 1.2rem;
   border: none;
+  font-size: 1rem;
+  background: var(--White, #fff);
 }
 
 .NumberField input:focus {
@@ -82,6 +89,7 @@
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+  position: relative;
 }
 
 .Label {
@@ -100,6 +108,23 @@
 }
 
 .TextInput:focus {
+  outline: none;
+}
+
+.TextAreaInput {
+  min-height: 174px;
+  padding: 12px 16px;
+  resize: none;
+  border-radius: 8px;
+  border: 1px solid var(--Grey-Grey-3, #e1e3e6);
+  background: var(--White, #fff);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+.TextAreaInput:focus {
   outline: none;
 }
 
@@ -124,7 +149,7 @@
   flex-direction: row;
   align-content: center;
   margin-bottom: 6px;
-  max-width: 500px;
+  width: 100%;
   flex-wrap: wrap;
 }
 
@@ -163,11 +188,21 @@
 
 .Image {
   width: 165.157px;
-  height: 165.5px;
+  aspect-ratio: 1/1;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+
+.Image div {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
 }
 
 .Image img {
@@ -175,8 +210,6 @@
   object-fit: cover;
   width: 100%;
   aspect-ratio: 1/1;
-  stroke-width: 2.749px;
-  stroke: #f7df1e;
 }
 
 .Image input {
@@ -200,4 +233,229 @@
   bottom: 0%;
   right: 0%;
   transform: translate(-0.5rem, -0.5rem);
+}
+
+.Resume {
+  display: flex;
+  padding: 12px 4px 12px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid var(--Grey-Grey-3, #e1e3e6);
+  background: var(--White, #fff);
+}
+
+.Resume p {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.Resume input {
+  display: none;
+}
+
+.Resume label {
+  display: flex;
+  cursor: pointer;
+  width: 79.945px;
+  height: 25.081px;
+  justify-content: center;
+  align-items: center;
+  gap: 2.042px;
+  border-radius: 12.25px;
+  background: #000;
+  color: var(--Primary-blue, #fff);
+  font-size: 14.292px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 14.292px */
+}
+
+.SocialType {
+  display: flex;
+  width: fit-content;
+  padding: 0.7rem 1rem;
+  align-items: center;
+  gap: 0.4rem;
+  color: #4461f2;
+}
+
+.GallaryImages {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  gap: 0.25rem;
+}
+
+.GallaryImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 6.332px;
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  overflow: hidden;
+  border-radius: 13.931px;
+  background: #eceffe;
+  color: #4461f2;
+  font-size: 2rem;
+  position: relative;
+}
+
+.FirstImage {
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+}
+
+.ImageButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: none;
+  width: fit-content;
+  padding: 0.5rem;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.VideoButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  width: fit-content;
+  padding: 0.5rem;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.videoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 13.931px;
+  overflow: hidden;
+  position: relative;
+}
+
+.PlayButton {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: white;
+  border-radius: 50%;
+  padding: 0.5rem;
+  border: none;
+  display: flex;
+  aspect-ratio: 1/1;
+  justify-content: center;
+  align-items: center;
+  color: #4461f2;
+}
+
+.CheckBox {
+  display: flex;
+  /* align-items: center; */
+  gap: 0.5rem;
+}
+
+.CheckBox input[type="checkbox"] {
+  appearance: none;
+  border: 1px solid #4461f2;
+  width: 1.25rem;
+  height: 1.25rem;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.CheckBox input[type="checkbox"]:checked::after {
+  content: "\2713";
+  background: #4461f2;
+  border: 1px solid #4461f2;
+  color: white;
+  font-size: 0.8rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SuggestionContainer {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 8px 9px;
+  max-height: 250px;
+  overflow: auto;
+  border: 1px solid #e1e3e6;
+  background: #fff;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  z-index: 10;
+}
+
+.Suggestion {
+  display: flex;
+  padding: 10px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
+}
+
+.Suggestion:hover {
+  background: var(--Primary-1, #4461f2);
+  color: var(--Primary-blue, #fff);
+}
+
+@media screen and (max-width: 500px) and (min-width: 220px) {
+  .Center {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .GallaryImage {
+    border-radius: 4px;
+  }
+  .videoContainer {
+    border-radius: 4px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .Center {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 }

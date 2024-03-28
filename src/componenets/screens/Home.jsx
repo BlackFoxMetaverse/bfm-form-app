@@ -5,15 +5,16 @@ import Login from "../forms/Login";
 import PersonalInfo from "../forms/PersonalInfo";
 import ProfessionalInfo from "../forms/ProfessionalInfo";
 import WorkInfo from "../forms/WorkInfo";
+import { getUserPreciseLocation } from "../../utils/location";
 
 export default function Home() {
-  const [page, setPage] = useState(3);
-
+  const [page, setPage] = useState(1);
   const [seller, setSeller] = useState({
     image: null,
     name: "",
     userName: "",
     email: "",
+    phone_number: "",
     city: "",
     profession: "",
     gender: "",
@@ -26,7 +27,7 @@ export default function Home() {
     socialMediaLinks: [],
     experienceDetails: [],
     images: [null, null, null, null, null, null],
-    video: null,
+    videos: [null, null, null, null, null, null],
     coordinates: { longitude: 0, latitude: 0 },
   });
 
@@ -34,11 +35,26 @@ export default function Home() {
     console.log(seller);
   }, [seller]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [page]);
+
+  useEffect(() => {
+    getUserPreciseLocation().then((location) => {
+      setSeller({ ...seller, coordinates: { ...location } });
+    });
+  }, []);
+
   return (
     <div className={style.Container}>
       <div className={style.Center}>
-        <Bread page={page} />
-        {page === 1 ? <Login setPage={setPage} /> : null}
+        <Bread page={page} setPage={setPage} />
+        {page === 1 ? (
+          <Login setPage={setPage} seller={seller} setSeller={setSeller} />
+        ) : null}
         {page === 2 ? (
           <PersonalInfo
             seller={seller}

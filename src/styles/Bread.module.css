@@ -52,3 +52,32 @@
 .UnvisitedIndex {
   padding: 0.5rem;
 }
+
+@media screen and (max-width: 500px) and (min-width: 220px) {
+  .Steps {
+    display: none;
+  }
+  .Numbers {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .Container {
+    width: 100%;
+  }
+  .Steps {
+    display: none;
+  }
+  .Numbers {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    justify-content: space-between;
+  }
+}
