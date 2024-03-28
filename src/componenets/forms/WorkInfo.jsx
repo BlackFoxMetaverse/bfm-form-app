@@ -39,6 +39,10 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
   const [socialType, setSocialType] = useState("");
   const [socialLink, setSocialLink] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
+  const [dataToSend, setDataToSend] = useState({
+    userName: "",
+    uid: "",
+  });
 
   const imagesRef = useRef([]);
   const videoRef = useRef(null);
@@ -204,6 +208,8 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
     // Append coordinates
     formData.append("coordinates", JSON.stringify(seller.coordinates));
 
+    console.log(formData);
+
     try {
       const token = sessionStorage.getItem("bfm-form-seller-token");
       const response = await axios.post(
@@ -217,6 +223,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
         }
       );
       console.log(response.data);
+      setDataToSend({ ...response.data?.data });
       setIsLoading(false);
       setIsCompleted(true);
     } catch (error) {
@@ -406,7 +413,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
               />
               {/* <label htmlFor="link">Link</label> */}
               <input
-                type="text"
+                type="url"
                 name="link"
                 required
                 placeholder="Paste Link"
@@ -640,7 +647,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             id="agreetoshare"
             required
           />
-          <label htmlFor="agree" className={style.Label}>
+          <label htmlFor="agreetoshare" className={style.Label}>
             I willingly share my details and information. I am aware that my
             contact details will be accessible to both visitors and members of
             the BFM platform due to my personal choice and decision.
@@ -652,9 +659,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             I agree to all{" "}
             <Link to="/terms-and-conditions" target="_blank">
               Terms & Conditions
-            </Link>{" "}
-            also the{" "}
-            <Link to="/privacy-policy" target="_blank">
+              <span style={{ textDecoration: "none" }}> also the </span>
               Privacy Policy
             </Link>
           </label>
@@ -663,7 +668,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
           {isLoading ? "Loading..." : "Submit"}
         </button>
       </div>
-      {isCompleted && <ThankYouPage />}
+      {isCompleted && <ThankYouPage {...dataToSend} />}
     </form>
   );
 }

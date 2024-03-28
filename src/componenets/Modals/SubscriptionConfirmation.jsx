@@ -1,6 +1,11 @@
 import * as React from "react";
 
-function SubscriptionConfirmation() {
+function SubscriptionConfirmation({ username, uid }) {
+  console.log({ uid, username });
+  const handleBackHomeClick = () => {
+    window.location.href = `https://portfolio.blackfoxmetaverse.io/profile/${username}?uid=${uid}`;
+  };
+
   return (
     <>
       <style jsx>{`
@@ -60,6 +65,21 @@ function SubscriptionConfirmation() {
           text-align: center;
           width: 100%;
         }
+
+        .back-home-button {
+          background-color: var(--Primary-1, #4461f2);
+          border: none;
+          border-radius: 3.172px;
+          color: var(--Primary-blue, #fff);
+          cursor: pointer;
+          font: 450 15px/100% Neue Helvetica, -apple-system, Roboto, Helvetica,
+            sans-serif;
+          justify-content: center;
+          margin-top: 22px;
+          padding: 11px 41px;
+          text-transform: capitalize;
+          white-space: nowrap;
+        }
       `}</style>
 
       <main className="mainModal">
@@ -79,6 +99,10 @@ function SubscriptionConfirmation() {
             You have successfully subscribed to our list. We will let you know
             when we launch.
           </p>
+
+          <button onClick={handleBackHomeClick} className="back-home-button">
+            View Profile
+          </button>
         </section>
       </main>
     </>

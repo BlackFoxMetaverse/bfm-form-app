@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import style from "../../styles/Form.module.css";
 import axios from "axios";
 import { IoCameraOutline } from "react-icons/io5";
-import { FaUser, FaUsers } from "react-icons/fa6";
 
 export default function PersonalInfo({ seller, setSeller, setPage }) {
   let phoneValidateTimeOut;

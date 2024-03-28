@@ -21,6 +21,7 @@ export default function Login({ setPage, seller, setSeller }) {
   const [isExistingUser, setIsExistingUser] = useState(false);
   const [isRegisterClicked, setIsRegisterClicked] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [dataToSend, setDataToSend] = useState({ username: "", uid: "" });
 
   async function loginUser(token) {
     try {
@@ -130,6 +131,7 @@ export default function Login({ setPage, seller, setSeller }) {
           email: email,
         });
       } else {
+        setDataToSend({ username: data?.username, uid: uid });
         setIsExistingUser(true);
       }
     } catch (error) {
@@ -161,6 +163,7 @@ export default function Login({ setPage, seller, setSeller }) {
                 email: email,
               });
             } else {
+              setDataToSend({ username: data?.username, uid: uid });
               setIsExistingUser(true);
             }
           })
@@ -185,9 +188,6 @@ export default function Login({ setPage, seller, setSeller }) {
       }).then(() => {
         localStorage.setItem("userCustomEmail", enteredEmail);
         setIsEmailSent(true);
-        setTimeout(() => {
-          window.close();
-        }, 3000);
       });
     } catch (error) {
       console.error("Error signing in with email:", error);
@@ -330,7 +330,7 @@ export default function Login({ setPage, seller, setSeller }) {
         ) : null} */}
       </div>
       <div id="recaptcha"></div>
-      {isExistingUser && <SubscriptionConfirmation />}
+      {isExistingUser && <SubscriptionConfirmation {...dataToSend} />}
     </div>
   );
 }

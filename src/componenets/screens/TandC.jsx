@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/TandC.css";
+import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+
+import pdf from "../../assets/policy.pdf";
 
 const Section = ({ title, content }) => {
   return (
@@ -14,6 +19,13 @@ const Section = ({ title, content }) => {
 };
 
 const TandC = () => {
+  const [numPages, setNumPages] = useState(null);
+  const [width, setWidth] = useState(1200);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
+
   const sectionsData = [
     {
       title: "OVERVIEW AND DEFINITIONS",
@@ -57,7 +69,23 @@ const TandC = () => {
   return (
     <main className="main-container">
       <div className="content-container">
-        <section className="custom-section">
+        <Document
+          file={pdf}
+          onLoadSuccess={({ numPages }) => {
+            setNumPages(numPages);
+          }}
+        >
+          {Array.from(new Array(numPages), (_, index) => (
+            <Page
+              key={`page_${index + 1}`}
+              pageNumber={index + 1}
+              scale={width > 768 ? 1.7 : 0.6}
+              renderMode="canvas"
+              renderTextLayer={false}
+            />
+          ))}
+        </Document>
+        {/* <section className="custom-section">
           <h1 className="main-title">Terms and Conditions.</h1>
           <p className="main-paragraph">
             Welcome to Black Fox Metaverse Before using our logo design service,
@@ -74,7 +102,7 @@ const TandC = () => {
             title={section.title}
             content={section.content}
           />
-        ))}
+        ))} */}
       </div>
     </main>
   );

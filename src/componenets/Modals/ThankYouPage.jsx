@@ -1,8 +1,8 @@
 import * as React from "react";
 
-function ThankYouPage() {
+function ThankYouPage({ userName, uid }) {
   const handleBackHomeClick = () => {
-    window.location.href = "https://blackfoxmetaverse.io/";
+    window.location.href = `https://portfolio.blackfoxmetaverse.io/profile/${userName}?uid=${uid}`;
   };
 
   return (
@@ -19,9 +19,9 @@ function ThankYouPage() {
           You have successfully subscribed to our list. We will let you know
           when we launch.
         </p>
-        {/* <button onClick={handleBackHomeClick} className="back-home-button">
-          Go back Home
-        </button> */}
+        <button onClick={handleBackHomeClick} className="back-home-button">
+          View Profile
+        </button>
       </section>
       <style jsx>{`
         .mainPage {
@@ -41,6 +41,7 @@ function ThankYouPage() {
           display: flex;
           flex-direction: column;
           max-width: 666px;
+          text-align: center;
         }
 
         .thank-you-image {
