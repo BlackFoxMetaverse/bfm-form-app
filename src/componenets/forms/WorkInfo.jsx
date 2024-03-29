@@ -8,6 +8,7 @@ import axios from "axios";
 import { IoAdd } from "react-icons/io5";
 import ThankYouPage from "../Modals/ThankYouPage";
 import { Link } from "react-router-dom";
+import { getUserPreciseLocation } from "../../utils/location";
 
 const SocialTypes = [
   {
@@ -168,8 +169,6 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsLoading(true);
-
     const formData = new FormData();
     formData.append("image", seller.image);
     formData.append("resume", seller.resume);
@@ -205,33 +204,45 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       });
     }
 
-    // Append coordinates
-    formData.append("coordinates", JSON.stringify(seller.coordinates));
-
-    console.log(formData);
-
-    try {
-      const token = sessionStorage.getItem("bfm-form-seller-token");
-      const response = await axios.post(
-        "https://api.blackfoxmetaverse.io/main/seller",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: token,
-          },
-        }
-      );
-
-      console.log(response.data);
-      setDataToSend({ ...response.data?.data });
+    if (
+      seller.coordinates.longitude === 0 &&
+      seller.coordinates.latitude === 0
+    ) {
       setIsLoading(false);
-      setIsCompleted(true);
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-      alert("Some thing went wrong!");
-      setIsCompleted(false);
+
+      getUserPreciseLocation().then((location) => {
+        setSeller({ ...seller, coordinates: { ...location } });
+      });
+      // Append coordinates
+      formData.append("coordinates", JSON.stringify(seller.coordinates));
+    } else {
+      setIsLoading(true);
+      // Append coordinates
+      formData.append("coordinates", JSON.stringify(seller.coordinates));
+
+      try {
+        const token = sessionStorage.getItem("bfm-form-seller-token");
+        const response = await axios.post(
+          "https://api.blackfoxmetaverse.io/main/seller",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              token: token,
+            },
+          }
+        );
+
+        console.log(response.data);
+        setDataToSend({ ...response.data?.data });
+        setIsLoading(false);
+        setIsCompleted(true);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+        alert("Some thing went wrong!");
+        setIsCompleted(false);
+      }
     }
   };
 
