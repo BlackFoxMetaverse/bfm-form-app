@@ -6,6 +6,7 @@ import { IoCameraOutline } from "react-icons/io5";
 export default function PersonalInfo({ seller, setSeller, setPage }) {
   let phoneValidateTimeOut;
   let userNameValidateTimeOut;
+  const [isNameValid, setIsNameValid] = useState(true);
   const [isPhoneValid, setIsPhoneValid] = useState(null);
   const [isUserNameValid, setIsUserNameValid] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
@@ -19,6 +20,14 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
       isUserNameValid
     ) {
       setPage(3);
+    }
+  };
+
+  const checkName = (name) => {
+    if (/\d/.test(name)) {
+      setIsNameValid(false);
+    } else {
+      setIsNameValid(true);
     }
   };
 
@@ -61,7 +70,15 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
       }
       checkPhone(seller.phone_number)
         .then((res) => {
-          if (res) {
+          if (
+            seller.phone_number.length > 10 ||
+            seller.phone_number.length < 10
+          ) {
+            setIsPhoneValid({
+              color: "red",
+              message: "Invalid Phone Number",
+            });
+          } else if (res) {
             setIsPhoneValid({
               color: "green",
               message: "Phone Number is valid",
@@ -159,13 +176,19 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
             required
             value={seller.name}
             className={style.TextInput}
-            onChange={(e) =>
+            onChange={(e) => {
+              checkName(e.target.value);
               setSeller((prev) => ({
                 ...prev,
                 name: e.target.value,
-              }))
-            }
+              }));
+            }}
           />
+          {!isNameValid && (
+            <p style={{ color: "red", margin: 0 }}>
+              Name should not contain numbers
+            </p>
+          )}
         </div>
         <div className={style.TextField}>
           <label htmlFor="userName" className={style.Label}>
@@ -303,7 +326,12 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
           )}
         </div>
         <button
-          disabled={isPhoneValid && !isUserNameValid}
+          disabled={
+            isPhoneValid === null &&
+            isPhoneValid?.message !== "Phone Number is valid" &&
+            !isUserNameValid &&
+            !isNameValid
+          }
           className="PrimaryBtn"
           type="submit"
         >
