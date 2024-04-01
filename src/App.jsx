@@ -34,8 +34,22 @@ function App() {
           alignItems: "center",
         }}
       >
-        <button type="button" className="PrimaryBtn">
-          <a href={location.href} target="_blank" download>
+        <button
+          type="button"
+          style={{
+            maxWidth: 300,
+            width: "90%",
+            alignSelf: "center",
+            maxHeight: 50,
+          }}
+          className="PrimaryBtn"
+        >
+          <a
+            style={{ textDecoration: "none", color: "white" }}
+            href={location.href}
+            target="_blank"
+            download
+          >
             Open In Browser
           </a>
         </button>
