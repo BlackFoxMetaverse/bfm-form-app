@@ -23,18 +23,37 @@ function App() {
     console.log("Google Analytics initialized. Tracking initial pageview.");
   }, []);
 
-  return (
-    <HashRouter>
-      <Navbar />
-      <hr />
-      <Routes>
-        <Route element={<Home />} path="/" />
-        <Route element={<TandC />} path="/terms-and-conditions" />
-        <Route element={<Acknowledge />} path="/privacy-policy" />
-      </Routes>
-      {/* <Home /> */}
-    </HashRouter>
-  );
+  if (navigator.userAgent.includes("Instagram")) {
+    return (
+      <main
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <button type="button" className="PrimaryBtn">
+          <a href={location.href} target="_blank" download>
+            Open In Browser
+          </a>
+        </button>
+      </main>
+    );
+  } else {
+    return (
+      <HashRouter>
+        <Navbar />
+        <hr />
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<TandC />} path="/terms-and-conditions" />
+          <Route element={<Acknowledge />} path="/privacy-policy" />
+        </Routes>
+      </HashRouter>
+    );
+  }
 }
 
 export default App;
