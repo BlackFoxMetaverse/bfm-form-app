@@ -45,7 +45,12 @@ function App() {
           className="PrimaryBtn"
         >
           <a
-            style={{ textDecoration: "none", color: "white" }}
+            style={{
+              textDecoration: "none",
+              color: "white",
+              width: "100%",
+              height: "100%",
+            }}
             href={location.href}
             target="_blank"
             download
