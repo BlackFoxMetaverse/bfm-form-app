@@ -125,6 +125,12 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
   }
 
   const handleCitySelection = (selectedCity) => {
+    if (window.innerWidth < 480) {
+      window.scroll({
+        top: 10,
+        behavior: "smooth",
+      });
+    }
     setSeller({ ...seller, city: selectedCity });
     setCities([]);
   };

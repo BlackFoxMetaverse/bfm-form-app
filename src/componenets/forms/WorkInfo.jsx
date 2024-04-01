@@ -109,57 +109,30 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       video.src = URL.createObjectURL(file);
       video.onloadedmetadata = () => {
         if (video.duration <= 60) {
-          setMedia((prev) => {
-            let midArr = prev;
-            midArr[index] = file;
-            return midArr;
-          });
           setSeller((prev) => {
-            let vidArr = prev.videos;
-            vidArr[index] = file;
-            return { ...prev, videos: vidArr };
+            let imgsArr = prev.images;
+            imgsArr[index] = file;
+            return { ...prev, images: imgsArr };
           });
         } else {
           alert("Please upload a video less than 1 minute in duration.");
         }
       };
     } else {
-      setMedia((prev) => {
-        let midArr = prev;
-        midArr[index] = file;
-        return midArr;
-      });
       setSeller((prev) => {
-        if (fileType === "image") {
-          let imgsArr = prev.images;
-          imgsArr[index] = file;
-          return { ...prev, images: imgsArr };
-        }
-        return prev;
+        let imgsArr = prev.images;
+        imgsArr[index] = file;
+        return { ...prev, images: imgsArr };
       });
     }
   };
 
-  const handleRemoveMedia = (index, file) => {
-    const fileType = file?.type.split("/")[0];
-    setMedia((prev) => {
-      let midArr = prev;
-      midArr[index] = null;
-      return midArr;
+  const handleRemoveMedia = (index) => {
+    setSeller((prev) => {
+      let imgsArr = prev.images;
+      imgsArr[index] = null;
+      return { ...prev, images: imgsArr };
     });
-    if (fileType === "image") {
-      setSeller((prev) => {
-        let imgsArr = prev.images;
-        imgsArr[index] = null;
-        return { ...prev, images: imgsArr };
-      });
-    } else {
-      setSeller((prev) => {
-        let vidArr = prev.videos;
-        vidArr[index] = null;
-        return { ...prev, videos: vidArr };
-      });
-    }
 
     if (imagesRef.current[index] && imagesRef.current[index].current) {
       imagesRef.current[index].current.value = "";
@@ -194,15 +167,15 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
     );
 
     // Append images
-    seller.images.forEach((img, index) => {
-      formData.append("images", img);
+    seller.images.forEach((media, index) => {
+      formData.append("images", media);
     });
 
-    if (seller.videos) {
-      seller.videos.forEach((vid, index) => {
-        formData.append("videos", vid);
-      });
-    }
+    // if (seller.videos) {
+    //   seller.videos.forEach((vid, index) => {
+    //     formData.append("videos", vid);
+    //   });
+    // }
 
     if (
       seller.coordinates.longitude === 0 &&
@@ -360,7 +333,26 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
                 type="url"
                 className={style.TextInput}
                 value={socialLink}
-                onChange={(e) => setSocialLink(e.target.value)}
+                onChange={(e) =>
+                  setSocialLink(() => {
+                    if (e.target.value.trim() === "") {
+                      setSocialLink("");
+                      return;
+                    }
+
+                    // Check if the input value starts with "http://" or "https://"
+                    if (
+                      !e.target.value.startsWith("http://") &&
+                      !e.target.value.startsWith("https://")
+                    ) {
+                      // If it doesn't, prepend "https://"
+                      e.target.value = "https://" + e.target.value;
+                    }
+
+                    // Update the social link state
+                    setSocialLink(e.target.value);
+                  })
+                }
               />
             )}
             {socialLink && validateURL(socialLink) ? (
@@ -480,87 +472,10 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             Add Experiences
           </button>
         </div>
-
-        {/* <div className={style.TextField}>
-          <label htmlFor="" className={style.Label}></label>
-          {seller.video ? (
-            <div className={style.videoContainer}>
-              <video
-                src={createFileUrl(seller.video)}
-                alt=""
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  aspectRatio: 16 / 9,
-                  objectFit: "cover",
-                  cursor: "pointer",
-                }}
-                ref={videoRef}
-                onClick={handlePlay}
-              />
-              <button
-                className={style.PlayButton}
-                type="button"
-                onClick={handlePlay}
-              >
-                {videoRef.current && videoRef.current.paused ? (
-                  <FaPlay />
-                ) : (
-                  <FaPause />
-                )}
-              </button>
-              <button
-                type="button"
-                className={style.ImageButton}
-                onClick={() =>
-                  setSeller((prev) => {
-                    return { ...prev, video: null };
-                  })
-                }
-              >
-                <RxCross2
-                  style={{
-                    padding: 2,
-                    background: "white",
-                    borderRadius: "50%",
-                  }}
-                />
-              </button>
-            </div>
-          ) : (
-            <div>
-              <label
-                htmlFor="video"
-                style={{
-                  zIndex: 10,
-                  cursor: "pointer",
-                }}
-                className="PrimaryBtn"
-              >
-                <FaUpload /> Upload Video
-              </label>
-              <input
-                ref={videoRef}
-                type="file"
-                name="video"
-                id="video"
-                style={{
-                  display: "none",
-                }}
-                onChange={(e) =>
-                  setSeller((prev) => {
-                    return { ...prev, video: e.target.files[0] };
-                  })
-                }
-                accept="video/*"
-              />
-            </div>
-          )}
-        </div> */}
         <div className={style.TextField}>
           <label className={style.Label}></label>
           <div className={style.GallaryImages}>
-            {media.map((media, index) =>
+            {seller.images.map((media, index) =>
               media ? (
                 <div
                   key={index}
@@ -671,7 +586,9 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             I agree to all{" "}
             <Link to="/terms-and-conditions" target="_blank">
               Terms & Conditions
-              <span style={{ textDecoration: "none" }}> also the </span>
+            </Link>
+            <span style={{ textDecoration: "none" }}> and </span>
+            <Link to="/terms-and-conditions" target="_blank">
               Privacy Policy
             </Link>
           </label>
