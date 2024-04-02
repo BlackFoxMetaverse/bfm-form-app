@@ -36,7 +36,6 @@ const SocialTypes = [
 export default function WorkInfo({ seller, setSeller, setPage }) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [media, setMedia] = useState([null, null, null, null, null, null]);
   const [socialType, setSocialType] = useState("");
   const [socialLink, setSocialLink] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
@@ -262,7 +261,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       <div className={style.Page}>
         <div className={style.TextField}>
           <label htmlFor="description" className={style.Label}>
-            Description*
+            Description <span className="required">*</span>
           </label>
           <textarea
             type="text"
@@ -282,7 +281,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="socialMediaLinks" className={style.Label}>
-            Connect with Social Media*
+            Connect with Social Media <span className="required">*</span>
           </label>
           {seller?.socialMediaLinks?.length > 0 && (
             <ul
@@ -393,7 +392,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
           className="formLayout"
         >
           <label htmlFor="experienceDetails" className={style.Label}>
-            Experiences*
+            Experiences <span className="required">*</span>
           </label>
           {seller.experienceDetails.map((obj, index, idx) => (
             <div key={index} className={style.TextField}>
@@ -474,6 +473,23 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label className={style.Label}></label>
+
+          <span className="instructions">
+            Show your work in image and video format...{" "}
+          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <span className="">
+              Note: <span className="required">*</span>
+            </span>
+            <span className="instructions">
+              Video duration should be less than 1 minute
+            </span>
+          </div>
           <div className={style.GallaryImages}>
             {seller.images.map((media, index) =>
               media ? (
@@ -491,6 +507,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
                         objectFit: "cover",
                         width: "100%",
                         height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.1)",
                       }}
                     />
                   ) : (

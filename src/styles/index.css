@@ -119,6 +119,16 @@ hr {
   line-height: 24px; /* 150% */
 }
 
+.required {
+  color: red;
+}
+
+.instructions {
+  font-size: 14px;
+  color: black;
+  opacity: 0.5;
+}
+
 .TeriaryButton {
   border: none;
   background: transparent;

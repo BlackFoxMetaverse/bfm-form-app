@@ -172,7 +172,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="name" className={style.Label}>
-            Name*
+            Name <span className="required">*</span>
           </label>
           <input
             type="text"
@@ -198,7 +198,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="userName" className={style.Label}>
-            Username*
+            Username <span className="required">*</span>
           </label>
           <input
             type="text"
@@ -223,7 +223,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="gender" className={style.Label}>
-            Gender*
+            Gender <span className="required">*</span>
           </label>
           <select
             name="gender"
@@ -248,7 +248,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="email" className={style.Label}>
-            Email Address*
+            Email Address <span className="required">*</span>
           </label>
           <input
             type="email"
@@ -268,7 +268,8 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
           className={style.TextField}
         >
           <label htmlFor="phone_number" className={style.Label}>
-            Phone Number* (Whatsapp Number)
+            Phone Number <span className="required">*</span>{" "}
+            <span className="instructions">(Whatsapp Number)</span>
           </label>
           <div
             style={{
@@ -305,7 +306,7 @@ export default function PersonalInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label htmlFor="city" className={style.Label}>
-            City*
+            City <span className="required">*</span>
           </label>
           <input
             type="text"
