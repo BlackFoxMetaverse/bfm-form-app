@@ -170,11 +170,11 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       formData.append("images", media);
     });
 
-    // if (seller.videos) {
-    //   seller.videos.forEach((vid, index) => {
-    //     formData.append("videos", vid);
-    //   });
-    // }
+    if (seller.videos) {
+      seller.videos.forEach((vid, index) => {
+        formData.append("videos", vid);
+      });
+    }
 
     // if (
     //   seller.coordinates.longitude === 0 &&
@@ -182,9 +182,13 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
     // ) {
     //   setIsLoading(false);
 
-    //   getUserPreciseLocation().then((location) => {
-    //     setSeller({ ...seller, coordinates: { ...location } });
-    //   });
+    //   getUserPreciseLocation()
+    //     .then((location) => {
+    //       setSeller({ ...seller, coordinates: { ...location } });
+    //     })
+    //     .catch((error) => {
+    //       setSeller({ ...seller, coordinates: { latitude: 0, longitude: 0 } });
+    //     });
     //   // Append coordinates
     //   formData.append("coordinates", JSON.stringify(seller.coordinates));
     // } else {
@@ -616,6 +620,46 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
         </button>
       </div>
       {isCompleted && <ThankYouPage {...dataToSend} />}
+      {seller.coordinates.longitude === 0 &&
+        seller.coordinates.latitude === 0 && (
+          <div on class="overlay">
+            <div class="modal">
+              <div class="modal-content">
+                <div class="header">
+                  <h3>Please allow the location permission</h3>
+                  <div class="description">
+                    <p>
+                      Your location is mendatory to list you on our platform
+                    </p>
+                    {/* <p>You can now paste it wherever you like.</p> */}
+                  </div>
+                </div>
+                <div class="footer">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await getUserPreciseLocation().then((location) => {
+                        setSeller({ ...seller, coordinates: { ...location } });
+                      });
+                    }}
+                    class="close-button"
+                  >
+                    Allow
+                  </button>
+                  <button
+                    type="button"
+                    class="close-button"
+                    onClick={() => {
+                      document.querySelector(".overlay").style.display = "none";
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
     </form>
   );
 }
