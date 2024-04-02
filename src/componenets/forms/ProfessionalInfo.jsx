@@ -191,9 +191,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
         <div className={style.TextField}>
           <label htmlFor="services" className={style.Label}>
             Services Provided <span className="required">*</span>
-            <span className="instructions">
-              (maximum 7 services you can add)
-            </span>
+            <span className="instructions">(upto 7 services you can add)</span>
           </label>
           {seller.services.length > 0 && (
             <div className={style.TagsContainer}>
@@ -240,7 +238,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
         <div className={style.TextField}>
           <label htmlFor="skills" className={style.Label}>
             Skills <span className="required">*</span>{" "}
-            <span className="instructions">(maximum 7 skills you can add)</span>
+            <span className="instructions">(upto 7 skills you can add)</span>
           </label>
           {seller.skills.length > 0 && (
             <div className={style.TagsContainer}>

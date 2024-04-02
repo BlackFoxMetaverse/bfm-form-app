@@ -176,46 +176,46 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
     //   });
     // }
 
-    if (
-      seller.coordinates.longitude === 0 &&
-      seller.coordinates.latitude === 0
-    ) {
+    // if (
+    //   seller.coordinates.longitude === 0 &&
+    //   seller.coordinates.latitude === 0
+    // ) {
+    //   setIsLoading(false);
+
+    //   getUserPreciseLocation().then((location) => {
+    //     setSeller({ ...seller, coordinates: { ...location } });
+    //   });
+    //   // Append coordinates
+    //   formData.append("coordinates", JSON.stringify(seller.coordinates));
+    // } else {
+    setIsLoading(true);
+    // Append coordinates
+    formData.append("coordinates", JSON.stringify(seller.coordinates));
+
+    try {
+      const token = sessionStorage.getItem("bfm-form-seller-token");
+      const response = await axios.post(
+        "https://api.blackfoxmetaverse.io/main/seller",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token,
+          },
+        }
+      );
+
+      console.log(response.data);
+      setDataToSend({ ...response.data?.data });
       setIsLoading(false);
-
-      getUserPreciseLocation().then((location) => {
-        setSeller({ ...seller, coordinates: { ...location } });
-      });
-      // Append coordinates
-      formData.append("coordinates", JSON.stringify(seller.coordinates));
-    } else {
-      setIsLoading(true);
-      // Append coordinates
-      formData.append("coordinates", JSON.stringify(seller.coordinates));
-
-      try {
-        const token = sessionStorage.getItem("bfm-form-seller-token");
-        const response = await axios.post(
-          "https://api.blackfoxmetaverse.io/main/seller",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              token: token,
-            },
-          }
-        );
-
-        console.log(response.data);
-        setDataToSend({ ...response.data?.data });
-        setIsLoading(false);
-        setIsCompleted(true);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-        alert("Some thing went wrong!");
-        setIsCompleted(false);
-      }
+      setIsCompleted(true);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      alert("Some thing went wrong!");
+      setIsCompleted(false);
     }
+    // }
   };
 
   // =================================================================
@@ -472,11 +472,12 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
           </button>
         </div>
         <div className={style.TextField}>
-          <label className={style.Label}></label>
-
-          <span className="instructions">
-            Show your work in image and video format...{" "}
-          </span>
+          <label className={style.Label}>
+            Describe your gigs{" "}
+            <span className="instructions">
+              Show your work in image and video format...{" "}
+            </span>
+          </label>
           <div
             style={{
               display: "flex",
