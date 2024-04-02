@@ -477,10 +477,8 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
         </div>
         <div className={style.TextField}>
           <label className={style.Label}>
-            Describe your gigs{" "}
-            <span className="instructions">
-              Show your work in image and video format...{" "}
-            </span>
+            Show your Gigs (
+            <span className="instructions">(Image/Video), if any... </span>)
           </label>
           <div
             style={{
