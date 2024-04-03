@@ -71,6 +71,7 @@ const TandC = () => {
       <div className="content-container">
         <Document
           file={pdf}
+          className={"content-container"}
           onLoadSuccess={({ numPages }) => {
             setNumPages(numPages);
           }}
