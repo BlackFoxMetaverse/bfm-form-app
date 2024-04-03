@@ -135,7 +135,7 @@ export default function Login({ setPage, seller, setSeller }) {
         setIsExistingUser(true);
       }
     } catch (error) {
-      console.error("Error signing in with Email:", error);
+      console.error("Error signing in with Google:", error);
       alert(error?.message);
       setIsExistingUser(false);
     }
