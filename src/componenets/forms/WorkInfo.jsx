@@ -35,6 +35,8 @@ const SocialTypes = [
 
 export default function WorkInfo({ seller, setSeller, setPage }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [descriptionwordCount, setDescriptionWordCount] = useState(0);
+  const [wordExperienceCount, setExperienceWordCount] = useState(0);
 
   const [socialType, setSocialType] = useState("");
   const [socialLink, setSocialLink] = useState("");
@@ -176,50 +178,52 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       });
     }
 
-    // if (
-    //   seller.coordinates.longitude === 0 &&
-    //   seller.coordinates.latitude === 0
-    // ) {
-    //   setIsLoading(false);
+    if (descriptionwordCount < 50) {
+      setIsLoading(false);
 
-    //   getUserPreciseLocation()
-    //     .then((location) => {
-    //       setSeller({ ...seller, coordinates: { ...location } });
-    //     })
-    //     .catch((error) => {
-    //       setSeller({ ...seller, coordinates: { latitude: 0, longitude: 0 } });
-    //     });
-    //   // Append coordinates
-    //   formData.append("coordinates", JSON.stringify(seller.coordinates));
-    // } else {
-    setIsLoading(true);
-    // Append coordinates
-    formData.append("coordinates", JSON.stringify(seller.coordinates));
-
-    try {
-      const token = sessionStorage.getItem("bfm-form-seller-token");
-      const response = await axios.post(
-        "https://api.blackfoxmetaverse.io/main/seller",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: token,
-          },
-        }
+      alert(
+        "Error: You have to describe your self in atleast 50 words current word count " +
+          descriptionwordCount
       );
 
-      console.log(response.data);
-      setDataToSend({ ...response.data?.data });
-      setIsLoading(false);
-      setIsCompleted(true);
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-      alert("Some thing went wrong!");
-      setIsCompleted(false);
+      // getUserPreciseLocation()
+      //   .then((location) => {
+      //     setSeller({ ...seller, coordinates: { ...location } });
+      //   })
+      //   .catch((error) => {
+      //     setSeller({ ...seller, coordinates: { latitude: 0, longitude: 0 } });
+      //   });
+      // // Append coordinates
+      // formData.append("coordinates", JSON.stringify(seller.coordinates));
+    } else {
+      setIsLoading(true);
+      // Append coordinates
+      formData.append("coordinates", JSON.stringify(seller.coordinates));
+
+      try {
+        const token = sessionStorage.getItem("bfm-form-seller-token");
+        const response = await axios.post(
+          "https://api.blackfoxmetaverse.io/main/seller",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              token: token,
+            },
+          }
+        );
+
+        console.log(response.data);
+        setDataToSend({ ...response.data?.data });
+        setIsLoading(false);
+        setIsCompleted(true);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+        alert("Some thing went wrong!");
+        setIsCompleted(false);
+      }
     }
-    // }
   };
 
   // =================================================================
@@ -254,6 +258,22 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
       }
     }
   };
+
+  // Function to update word count for description
+  useEffect(() => {
+    setDescriptionWordCount(
+      seller.description.length && seller.description.split(" ").length
+    );
+  }, [seller.description]);
+
+  // Function to update word count for experience details
+  // useEffect(() => {
+  //   seller.experienceDetails.forEach((exp, index) => {
+  //     setExperienceWordCount(
+  //       exp.content.length && exp.content.split(" ").length
+  //     );
+  //   });
+  // }, [seller.experienceDetails]);
   // =================================================================
 
   return (
@@ -282,6 +302,24 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
               }))
             }
           ></textarea>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <div
+              style={{
+                color: "red",
+                opacity: 0.5,
+              }}
+            >
+              Description should be of 50 to 300 words
+            </div>
+            <div>{descriptionwordCount} / 300 words</div>
+          </div>
         </div>
         <div className={style.TextField}>
           <label htmlFor="socialMediaLinks" className={style.Label}>
@@ -361,10 +399,7 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             {socialLink && validateURL(socialLink) ? (
               <button
                 type="button"
-                style={{
-                  color: "#4461F2",
-                }}
-                className="SecondaryBtn"
+                className="PrimaryBtn"
                 onClick={() =>
                   addSocials({ type: socialType, link: socialLink })
                 }
@@ -450,6 +485,24 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
                 }
                 placeholder="Describe your product and service"
               ></textarea>
+              {/* <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <div
+                  style={{
+                    color: "red",
+                    opacity: 0.5,
+                  }}
+                >
+                  Experience details should be of 50 to 300 words
+                </div>
+                <div>{wordExperienceCount} / 300 words</div>
+              </div> */}
               <button
                 type="button"
                 style={{
