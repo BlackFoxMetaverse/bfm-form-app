@@ -8,7 +8,7 @@ import WorkInfo from "../forms/WorkInfo";
 import { getUserPreciseLocation } from "../../utils/location";
 
 export default function Home() {
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(1);
   const [seller, setSeller] = useState({
     image: null,
     name: "",
