@@ -629,7 +629,6 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
                     <p>
                       Your location is mendatory to list you on our platform
                     </p>
-                    {/* <p>You can now paste it wherever you like.</p> */}
                   </div>
                 </div>
                 <div class="footer">

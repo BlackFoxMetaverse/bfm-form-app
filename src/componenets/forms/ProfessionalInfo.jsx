@@ -185,7 +185,7 @@ export default function ProfessionalInfo({ seller, setSeller, setPage }) {
             <option value="0-1">0-1</option>
             <option value="1-3">1-3</option>
             <option value="3-5">3-5</option>
-            <option value="5 and above">5 and above</option>
+            <option value="5+">5+</option>
           </select>
         </div>
         <div className={style.TextField}>
