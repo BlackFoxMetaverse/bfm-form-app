@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RxCrossCircled } from "react-icons/rx";
+import style from "../../styles/Form.module.css";
 
 function ValidationErrorPage({ token }) {
+  const [inputToken, setInputToken] = useState(token);
+
+  const refferalToken = new URLSearchParams(window.location.search);
+  useEffect(() => {
+    if (refferalToken.has("token")) {
+      setInputToken(refferalToken.get("token"));
+    } else {
+      refferalToken.set("token", inputToken);
+    }
+  }, []);
+
   return (
     <main className="mainPage">
       <section className="thank-you-container">
@@ -19,6 +31,28 @@ function ValidationErrorPage({ token }) {
         <p className="thank-you-description">
           Requires a valid referal token to access this page.
         </p>
+        <form
+          style={{
+            marginTop: 30,
+          }}
+          className={style.TextField}
+        >
+          <input
+            type="text"
+            name="token"
+            id="token"
+            placeholder="Referral Code"
+            required
+            value={inputToken}
+            className={style.TextInput}
+            onChange={(e) => {
+              setInputToken(e.target.value);
+            }}
+          />
+          <button type="submit" className="PrimaryBtn">
+            Enter
+          </button>
+        </form>
       </section>
       <style jsx>{`
         .mainPage {
