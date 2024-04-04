@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./componenets/Navbar";
 import Home from "./componenets/screens/Home";
 import ReactGA from "react-ga4";
@@ -7,6 +7,8 @@ import TandC from "./componenets/screens/TandC";
 import Acknowledge from "./componenets/screens/Acknowledge";
 
 function App() {
+  const [referralToken, setReferralToken] = useState("");
+
   useEffect(() => {
     console.log("Initializing Google Analytics...");
 
@@ -21,6 +23,14 @@ function App() {
     });
 
     console.log("Google Analytics initialized. Tracking initial pageview.");
+  }, []);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    if (token) {
+      setReferralToken(token);
+    }
   }, []);
 
   if (navigator.userAgent.includes("Instagram")) {
@@ -66,7 +76,7 @@ function App() {
         <Navbar />
         <hr />
         <Routes>
-          <Route element={<Home />} path="/" />
+          <Route element={<Home token={referralToken} />} path="/" />
           <Route element={<TandC />} path="/terms-and-conditions" />
           <Route element={<Acknowledge />} path="/privacy-policy" />
         </Routes>
