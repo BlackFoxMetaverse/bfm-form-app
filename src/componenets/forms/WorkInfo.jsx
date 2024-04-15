@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "../../styles/Form.module.css";
-import { FaDribbble, FaGithub, FaLinkedinIn, FaVideo } from "react-icons/fa6";
+import {
+  FaDribbble,
+  FaGithub,
+  FaGlobe,
+  FaGoogleDrive,
+  FaLinkedinIn,
+  FaVideo,
+} from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
 import { SiBehance } from "react-icons/si";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { IoAdd } from "react-icons/io5";
 import ThankYouPage from "../Modals/ThankYouPage";
-import { Link } from "react-router-dom";
 import { getUserPreciseLocation } from "../../utils/location";
+import { Link } from "react-router-dom";
 
 const SocialTypes = [
   {
@@ -28,8 +35,16 @@ const SocialTypes = [
     icon: <FaDribbble />,
   },
   {
+    name: "GDrive",
+    icon: <FaGoogleDrive />,
+  },
+  {
     name: "Github",
     icon: <FaGithub />,
+  },
+  {
+    name: "Portfolio",
+    icon: <FaGlobe />,
   },
 ];
 
@@ -230,6 +245,15 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
   function validateURL(url) {
     try {
       const isUrl = new URL(url);
+      if (socialType.toLowerCase() === "portfolio") {
+        return true;
+      }
+      if (
+        socialType.toLowerCase() === "gdrive" &&
+        isUrl.hostname.includes("drive.google.com")
+      ) {
+        return true;
+      }
       if (
         socialType.toLowerCase() ===
         (isUrl.hostname.includes("www")
@@ -334,9 +358,13 @@ export default function WorkInfo({ seller, setSeller, setPage }) {
             >
               {seller?.socialMediaLinks?.map((social, index) => (
                 <li key={index} className={style.SocialType}>
-                  <div style={{ fontSize: 25.779 }}>
+                  <Link
+                    to={social.link}
+                    target="_blank"
+                    style={{ fontSize: 25.779 }}
+                  >
                     {getIconByName(social.platformType)}
-                  </div>
+                  </Link>
                   <button
                     type="button"
                     className="TeriaryButton"
